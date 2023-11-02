@@ -1,3 +1,1 @@
-# cgkojo
-
-WEBサイト
+＃CGKoJo
