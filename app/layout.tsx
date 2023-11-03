@@ -1,6 +1,6 @@
-import "./globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import "./globals.css"
 import { getAuthSession } from "@/lib/nextauth"
 import AuthProvider from "@/components/providers/AuthProvider"
 import TrpcProvider from "@/components/providers/TrpcProvider"
@@ -10,8 +10,8 @@ import Navigation from "@/components/auth/Navigation"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: 'CGKoJo',
-  description: 'クラシックギターと日々雑感',
+  title: "TもっちないBOX",
+  description: "株式会社しんえこサイト",
 }
 
 interface RootLayoutProps {
@@ -30,24 +30,25 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
             <TrpcProvider>
               <Navigation user={user} />
               <ToastProvider />
-              <main className="container mx-auto max-w-screen-md flex-1 px-2">
-                  {children}
-                </main>
 
-                {/* フッター */}
-                <footer className="py-5">
-                  <div className="text-center text-sm">
-                    Copyright © All rights reserved |{" "}
-                    <a
-                      href="http://cgkojo.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline"
-                    >
-                      CGKoJo
-                    </a>
-                  </div>
-                </footer>
+              <main className="container mx-auto max-w-screen-md flex-1 px-2">
+                {children}
+              </main>
+
+              {/* フッター */}
+              <footer className="py-5">
+                <div className="text-center text-sm">
+                  Copyright © All rights reserved |{" "}
+                  <a
+                    href="https://www.syneco.co.jp/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    株式会社しんえこ
+                  </a>
+                </div>
+              </footer>
             </TrpcProvider>
           </AuthProvider>
         </div>

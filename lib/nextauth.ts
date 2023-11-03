@@ -9,6 +9,7 @@ import bcrypt from "bcrypt"
 export const authOptions: NextAuthOptions = {
   // Prismaを使うための設定
   adapter: PrismaAdapter(prisma),
+
   // 認証プロバイダーの設定
   providers: [
     // Google認証

@@ -1,0 +1,24 @@
+# Environment variables declared in this file are automatically made available to Prisma.
+# See the documentation for more detail: https://pris.ly/d/prisma-schema#accessing-environment-variables-from-the-schema
+
+# Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
+# See the documentation for all the connection string options: https://pris.ly/d/connection-strings
+
+DATABASE_URL="postgresql://postgres:hHuj84nH1jsisD88@db.vnzfaygfcvynyaerifrj.supabase.co:5432/postgres"
+# DATABASE_URL=postgresql://postgres:@localhost:5432/t3stackdb?schema=public
+
+NEXTAUTH_SECRET="UlXfGWeUhp8svBHcNZlcep4mfUXrrhXsC51hNWxFgFk="
+NEXTAUTH_URL=http://localhost:3000
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+GOOGLE_CLIENT_ID=153475727019-gs2fpmam3asgn4kn8bunatta8r8dj20f.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=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
+
+CLOUDINARY_NAME=dkwhq5vrz
+CLOUDINARY_API_KEY=351432185562556
+CLOUDINARY_API_SECRET=sh1LdotK-uGMTey89v-6hNj38VY
+
+EMAIL=kakiyamamikio@gmail.com
+EMAIL_PASSWORD="kdcr nrsv wkgb plxk"
+
+MAX_IMAGE_SIZE=8*1024*1024

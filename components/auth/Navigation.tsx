@@ -15,19 +15,20 @@ const Navigation = ({ user }: NavigationProps) => {
     <header className="shadow-lg shadow-gray-100 mb-10">
       <div className="container mx-auto flex max-w-screen-md items-center justify-between px-2 py-3">
         <Link href="/" className="cursor-pointer text-xl font-bold">
-          クラシックギターと日々雑感
+          もったいないBOX
         </Link>
+
         {user ? (
-            <UserNavigation user={user} />
+          <UserNavigation user={user} />
         ) : (
-            <div className="flex items-center space-x-1">
+          <div className="flex items-center space-x-1">
             <Button asChild variant="ghost" className="font-bold">
-                <Link href="/login">ログイン</Link>
+              <Link href="/login">ログイン</Link>
             </Button>
             <Button asChild variant="default" className="font-bold">
-                <Link href="/signup">新規登録</Link>
+              <Link href="/signup">新規登録</Link>
             </Button>
-            </div>
+          </div>
         )}
       </div>
     </header>
