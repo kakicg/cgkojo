@@ -10,8 +10,8 @@ import Navigation from "@/components/auth/Navigation"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "TもっちないBOX",
-  description: "株式会社しんえこサイト",
+  title: "クラシックギターと日々雑感",
+  description: "kakicgのブログ",
 }
 
 interface RootLayoutProps {
@@ -40,12 +40,12 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
                 <div className="text-center text-sm">
                   Copyright © All rights reserved |{" "}
                   <a
-                    href="https://www.syneco.co.jp/"
+                    href="https://www.kakicg.site/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline"
                   >
-                    株式会社しんえこ
+                    CG工場
                   </a>
                 </div>
               </footer>
