@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import GoogleAnalytics from '@/components/settings/GoogleAnalytics'
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { getAuthSession } from "@/lib/nextauth"
@@ -24,7 +25,11 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
 
   return (
     <html lang="ja">
+      <head>
+        <GoogleAnalytics />
+      </head>
       <body className={inter.className}>
+       
         <div className="flex min-h-screen flex-col">
           <AuthProvider>
             <TrpcProvider>
