@@ -35,38 +35,38 @@ export const commentRouter = router({
       }
     }),
 
-//   // コメント一覧取得
-//   getComments: publicProcedure
-//     .input(
-//       z.object({
-//         userId: z.string().optional(),
-//         postId: z.string(),
-//         limit: z.number(),
-//         offset: z.number(),
-//       })
-//     )
-//     .query(async ({ input }) => {
-//       try {
-//         const { userId, postId, limit, offset } = input
+  // コメント一覧取得
+  getComments: publicProcedure
+    .input(
+      z.object({
+        // userId: z.string().optional(),
+        postId: z.string(),
+        // limit: z.number(),
+        // offset: z.number(),
+      })
+    )
+    .query(async ({ input }) => {
+      try {
+        const { userId, postId, limit, offset } = input
 
-//         const comments = await prisma.comment.findMany({
-//           where: { postId },
-//           skip: offset,
-//           take: limit,
-//           orderBy: {
-//             updatedAt: "desc",
-//           },
-//           include: {
-//             user: {
-//               select: {
-//                 id: true,
-//                 name: true,
-//                 image: true,
-//               },
-//             },
-//             likes: true,
-//           },
-//         })
+        const comments = await prisma.comment.findMany({
+          where: { postId },
+        //   skip: offset,
+        //   take: limit,
+          orderBy: {
+            updatedAt: "desc",
+          },
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                image: true,
+              },
+            },
+        //     likes: true,
+          },
+        })
 
 //         const commentsWithLikesStatus = comments.map((comment) => {
 //           const userLike = userId
@@ -85,15 +85,16 @@ export const commentRouter = router({
 //           where: { postId },
 //         })
 
-//         return { comments: commentsWithLikesStatus, totalComments }
-//       } catch (error) {
-//         console.log(error)
-//         throw new TRPCError({
-//           code: "INTERNAL_SERVER_ERROR",
-//           message: "エラーが発生しました。",
-//         })
-//       }
-//     }),
+// return { comments: commentsWithLikesStatus, totalComments }
+        return { comments }
+      } catch (error) {
+        console.log(error)
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "エラーが発生しました。",
+        })
+      }
+    }),
 
 //   // コメント詳細取得
 //   getCommentById: publicProcedure
