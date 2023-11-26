@@ -41,19 +41,18 @@ export const commentRouter = router({
       z.object({
         userId: z.string().optional(),
         postId: z.string(),
-        // limit: z.number(),
-        // offset: z.number(),
+        limit: z.number(),
+        offset: z.number(),
       })
     )
     .query(async ({ input }) => {
       try {
-        // const { userId, postId, limit, offset } = input
-        const { userId, postId } = input
+        const { userId, postId, limit, offset } = input
 
         const comments = await prisma.comment.findMany({
           where: { postId },
-        //   skip: offset,
-        //   take: limit,
+          skip: offset,
+          take: limit,
           orderBy: {
             updatedAt: "desc",
           },
@@ -81,13 +80,12 @@ export const commentRouter = router({
           }
         })
 
-        // // コメントの総数を取得
-        // const totalComments = await prisma.comment.count({
-        //   where: { postId },
-        // })
+        // コメントの総数を取得
+        const totalComments = await prisma.comment.count({
+          where: { postId },
+        })
 
-// return { comments: commentsWithLikesStatus, totalComments }
-        return { comments: commentsWithLikesStatus }
+        return { comments: commentsWithLikesStatus, totalComments }
       } catch (error) {
         console.log(error)
         throw new TRPCError({

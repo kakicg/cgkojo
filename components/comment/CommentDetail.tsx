@@ -1,11 +1,10 @@
 "use client"
 
-// import { Comment, User, CommentLike } from "@prisma/client"
 import { Comment, User, CommentLike } from "@prisma/client"
-// import { commentPerPage } from "@/lib/utils"
+import { commentPerPage } from "@/lib/utils"
 import CommentNew from "@/components/comment/CommentNew"
 import CommentItem from "@/components/comment/CommentItem"
-// import PaginationButton from "@/components/pagers/PaginationButton"
+import PaginationButton from "@/components/pagers/PaginationButton"
 
 interface CommentDetailProps {
   userId?: string
@@ -14,9 +13,8 @@ interface CommentDetailProps {
     hasLiked: boolean
     commentLikeId: string | null
   } & { likes: CommentLike[] })[]
-
-  // pageCount: number
-  // totalComments: number
+  pageCount: number
+  totalComments: number
 }
 
 // コメント詳細
@@ -24,15 +22,15 @@ const CommentDetail = ({
   userId,
   postId,
   comments,
-  // pageCount,
-  // totalComments,
+  pageCount,
+  totalComments,
 }: CommentDetailProps) => {
   return (
     <div className="space-y-5">
       <CommentNew userId={userId} postId={postId} />
       <div className="border rounded-md">
         <div className="border-b bg-gray-50 rounded-t-xl p-2 sm:p-5 text-sm font-bold">
-          コメント {comments.length}
+          コメント {totalComments}
         </div>
 
         {comments.length === 0 ? (
@@ -52,13 +50,13 @@ const CommentDetail = ({
           </div>
         )}
       </div>
-{/*}
+
       {comments.length !== 0 && (
         <PaginationButton
           pageCount={pageCount}
           displayPerPage={commentPerPage}
         />
-      )} */}
+      )}
     </div>
   )
 }
