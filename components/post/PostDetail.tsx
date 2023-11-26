@@ -1,6 +1,6 @@
 "use client"
 
-import { Post, User } from "@prisma/client"
+import { Post, User, Comment, CommentLike } from "@prisma/client"
 import { format } from "date-fns"
 import { useRouter } from "next/navigation"
 import { Pencil, Trash2 } from "lucide-react"
@@ -15,10 +15,14 @@ interface PostDetailProps {
     user: Pick<User, "id" | "name" | "image">
   }
   userId?: string
+  comments: (Comment & { user: Pick<User, "id" | "name" | "image"> } & {
+    hasLiked: boolean
+    commentLikeId: string | null
+  } & { likes: CommentLike[] })[]
 }
 
 // 投稿詳細
-const PostDetail = ({ post, userId }: PostDetailProps) => {
+const PostDetail = ({ post, userId, comments }: PostDetailProps) => {
   const router = useRouter()
 
   // 投稿削除
@@ -99,7 +103,7 @@ const PostDetail = ({ post, userId }: PostDetailProps) => {
           </button>
         </div>
       )}
-      <CommentDetail userId={userId} postId={post.id} />
+      <CommentDetail userId={userId} postId={post.id} comments={comments} />
     </div>
   )
 }

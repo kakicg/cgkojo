@@ -1,5 +1,6 @@
 "use client"
 
+// import { Comment, User, CommentLike } from "@prisma/client"
 import { Comment, User, CommentLike } from "@prisma/client"
 import { format } from "date-fns"
 import { useRouter } from "next/navigation"
@@ -75,6 +76,7 @@ const CommentItem = ({ comment, userId }: CommentItemProps) => {
           <>
             <Link href={`/comment/${comment.id}/edit`}>
               <div className="hover:bg-gray-100 p-2 rounded-full">
+                {/* d */}
                 <Pencil className="w-5 h-5" />
               </div>
             </Link>

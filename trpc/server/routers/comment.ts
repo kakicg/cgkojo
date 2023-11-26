@@ -39,7 +39,7 @@ export const commentRouter = router({
   getComments: publicProcedure
     .input(
       z.object({
-        // userId: z.string().optional(),
+        userId: z.string().optional(),
         postId: z.string(),
         // limit: z.number(),
         // offset: z.number(),
@@ -47,7 +47,8 @@ export const commentRouter = router({
     )
     .query(async ({ input }) => {
       try {
-        const { userId, postId, limit, offset } = input
+        // const { userId, postId, limit, offset } = input
+        const { userId, postId } = input
 
         const comments = await prisma.comment.findMany({
           where: { postId },
@@ -64,29 +65,29 @@ export const commentRouter = router({
                 image: true,
               },
             },
-        //     likes: true,
+            likes: true,
           },
         })
 
-//         const commentsWithLikesStatus = comments.map((comment) => {
-//           const userLike = userId
-//             ? comment.likes.find((like) => like.userId === userId)
-//             : null
+        const commentsWithLikesStatus = comments.map((comment) => {
+          const userLike = userId
+            ? comment.likes.find((like) => like.userId === userId)
+            : null
 
-//           return {
-//             ...comment,
-//             hasLiked: !!userLike,
-//             commentLikeId: userLike ? userLike.id : null,
-//           }
-//         })
+          return {
+            ...comment,
+            hasLiked: !!userLike,
+            commentLikeId: userLike ? userLike.id : null,
+          }
+        })
 
-//         // コメントの総数を取得
-//         const totalComments = await prisma.comment.count({
-//           where: { postId },
-//         })
+        // // コメントの総数を取得
+        // const totalComments = await prisma.comment.count({
+        //   where: { postId },
+        // })
 
 // return { comments: commentsWithLikesStatus, totalComments }
-        return { comments }
+        return { comments: commentsWithLikesStatus }
       } catch (error) {
         console.log(error)
         throw new TRPCError({
@@ -96,183 +97,183 @@ export const commentRouter = router({
       }
     }),
 
-//   // コメント詳細取得
-//   getCommentById: publicProcedure
-//     .input(
-//       z.object({
-//         commentId: z.string(),
-//       })
-//     )
-//     .query(async ({ input }) => {
-//       try {
-//         const { commentId } = input
+  // コメント詳細取得
+  getCommentById: publicProcedure
+    .input(
+      z.object({
+        commentId: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      try {
+        const { commentId } = input
 
-//         const comment = await prisma.comment.findUnique({
-//           where: { id: commentId },
-//           include: {
-//             user: {
-//               select: {
-//                 id: true,
-//                 name: true,
-//                 image: true,
-//               },
-//             },
-//           },
-//         })
+        const comment = await prisma.comment.findUnique({
+          where: { id: commentId },
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                image: true,
+              },
+            },
+          },
+        })
 
-//         return comment
-//       } catch (error) {
-//         console.log(error)
-//         throw new TRPCError({
-//           code: "INTERNAL_SERVER_ERROR",
-//           message: "エラーが発生しました。",
-//         })
-//       }
-//     }),
+        return comment
+      } catch (error) {
+        console.log(error)
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "エラーが発生しました。",
+        })
+      }
+    }),
 
-//   // コメント編集
-//   updateComment: privateProcedure
-//     .input(
-//       z.object({
-//         commentId: z.string(),
-//         content: z.string(),
-//       })
-//     )
-//     .mutation(async ({ input, ctx }) => {
-//       try {
-//         const { commentId, content } = input
-//         const userId = ctx.user.id
+  // コメント編集
+  updateComment: privateProcedure
+    .input(
+      z.object({
+        commentId: z.string(),
+        content: z.string(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      try {
+        const { commentId, content } = input
+        const userId = ctx.user.id
 
-//         const comment = await prisma.comment.findUnique({
-//           where: { id: commentId },
-//         })
+        const comment = await prisma.comment.findUnique({
+          where: { id: commentId },
+        })
 
-//         if (!comment) {
-//           throw new TRPCError({
-//             code: "BAD_REQUEST",
-//             message: "コメントが見つかりませんでした",
-//           })
-//         }
+        if (!comment) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "コメントが見つかりませんでした",
+          })
+        }
 
-//         if (userId !== comment.userId) {
-//           throw new TRPCError({
-//             code: "BAD_REQUEST",
-//             message: "コメントの編集権限がありません",
-//           })
-//         }
+        if (userId !== comment.userId) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "コメントの編集権限がありません",
+          })
+        }
 
-//         await prisma.comment.update({
-//           where: {
-//             id: commentId,
-//           },
-//           data: {
-//             content,
-//           },
-//         })
+        await prisma.comment.update({
+          where: {
+            id: commentId,
+          },
+          data: {
+            content,
+          },
+        })
 
-//         return comment
-//       } catch (error) {
-//         console.log(error)
-//         throw new TRPCError({
-//           code: "INTERNAL_SERVER_ERROR",
-//           message: "エラーが発生しました。",
-//         })
-//       }
-//     }),
+        return comment
+      } catch (error) {
+        console.log(error)
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "エラーが発生しました。",
+        })
+      }
+    }),
 
-//   // コメント削除
-//   deleteComment: privateProcedure
-//     .input(
-//       z.object({
-//         commentId: z.string(),
-//       })
-//     )
-//     .mutation(async ({ input, ctx }) => {
-//       try {
-//         const { commentId } = input
-//         const userId = ctx.user.id
+  // コメント削除
+  deleteComment: privateProcedure
+    .input(
+      z.object({
+        commentId: z.string(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      try {
+        const { commentId } = input
+        const userId = ctx.user.id
 
-//         const comment = await prisma.comment.findUnique({
-//           where: { id: commentId },
-//         })
+        const comment = await prisma.comment.findUnique({
+          where: { id: commentId },
+        })
 
-//         if (!comment) {
-//           throw new TRPCError({
-//             code: "BAD_REQUEST",
-//             message: "コメントが見つかりませんでした",
-//           })
-//         }
+        if (!comment) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "コメントが見つかりませんでした",
+          })
+        }
 
-//         if (userId !== comment.userId) {
-//           throw new TRPCError({
-//             code: "BAD_REQUEST",
-//             message: "コメントの削除権限がありません",
-//           })
-//         }
+        if (userId !== comment.userId) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "コメントの削除権限がありません",
+          })
+        }
 
-//         await prisma.comment.delete({
-//           where: {
-//             id: commentId,
-//           },
-//         })
-//       } catch (error) {
-//         console.log(error)
-//         throw new TRPCError({
-//           code: "INTERNAL_SERVER_ERROR",
-//           message: "エラーが発生しました。",
-//         })
-//       }
-//     }),
+        await prisma.comment.delete({
+          where: {
+            id: commentId,
+          },
+        })
+      } catch (error) {
+        console.log(error)
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "エラーが発生しました。",
+        })
+      }
+    }),
 
-//   // いいね追加
-//   createCommentLike: privateProcedure
-//     .input(
-//       z.object({
-//         commentId: z.string(),
-//       })
-//     )
-//     .mutation(async ({ input, ctx }) => {
-//       try {
-//         const { commentId } = input
-//         const userId = ctx.user.id
+  // いいね追加
+  createCommentLike: privateProcedure
+    .input(
+      z.object({
+        commentId: z.string(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      try {
+        const { commentId } = input
+        const userId = ctx.user.id
 
-//         await prisma.commentLike.create({
-//           data: {
-//             userId,
-//             commentId,
-//           },
-//         })
-//       } catch (error) {
-//         console.log(error)
-//         throw new TRPCError({
-//           code: "INTERNAL_SERVER_ERROR",
-//           message: "エラーが発生しました。",
-//         })
-//       }
-//     }),
+        await prisma.commentLike.create({
+          data: {
+            userId,
+            commentId,
+          },
+        })
+      } catch (error) {
+        console.log(error)
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "エラーが発生しました。",
+        })
+      }
+    }),
 
-//   // いいね削除
-//   deleteCommentLike: privateProcedure
-//     .input(
-//       z.object({
-//         commentLikeId: z.string(),
-//       })
-//     )
-//     .mutation(async ({ input }) => {
-//       try {
-//         const { commentLikeId } = input
+  // いいね削除
+  deleteCommentLike: privateProcedure
+    .input(
+      z.object({
+        commentLikeId: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        const { commentLikeId } = input
 
-//         await prisma.commentLike.delete({
-//           where: {
-//             id: commentLikeId,
-//           },
-//         })
-//       } catch (error) {
-//         console.log(error)
-//         throw new TRPCError({
-//           code: "INTERNAL_SERVER_ERROR",
-//           message: "エラーが発生しました。",
-//         })
-//       }
-//     }),
+        await prisma.commentLike.delete({
+          where: {
+            id: commentLikeId,
+          },
+        })
+      } catch (error) {
+        console.log(error)
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "エラーが発生しました。",
+        })
+      }
+    }),
 })

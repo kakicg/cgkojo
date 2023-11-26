@@ -26,6 +26,7 @@ const PostDetailPage = async ({ params }: PostDetailPageProps) => {
 
   // コメント一覧取得
   const { comments } = await trpc.comment.getComments({
+    userId: user?.id,
     postId,
   })
 
@@ -33,7 +34,7 @@ const PostDetailPage = async ({ params }: PostDetailPageProps) => {
 
   // const pageCount = Math.ceil(totalComments / limit)
 
-  return <PostDetail post={post} userId={user?.id} />
+  return <PostDetail post={post} userId={user?.id} comments={comments} />
 }
 
 export default PostDetailPage
