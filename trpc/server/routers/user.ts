@@ -71,4 +71,54 @@ export const userRouter = router({
         }
       }
     }),
+
+  // ユーザー投稿詳細取得
+  getUserByIdPost: publicProcedure
+    .input(
+      z.object({
+        userId: z.string().optional(),
+        limit: z.number(),
+        offset: z.number(),
+      })
+    )
+    .query(async ({ input }) => {
+      try {
+        const { userId, limit, offset } = input
+
+        if (!userId) {
+          return { user: null, totalPosts: 0 }
+        }
+
+        // ユーザー投稿詳細取得
+        const user = await prisma.user.findUnique({
+          where: { id: userId },
+          include: {
+            posts: {
+              skip: offset,
+              take: limit,
+              orderBy: {
+                updatedAt: "desc",
+              },
+            },
+          },
+        })
+
+        if (!user) {
+          return { user: null, totalPosts: 0 }
+        }
+
+        // 投稿の総数を取得
+        const totalPosts = await prisma.post.count({
+          where: { userId },
+        })
+
+        return { user, totalPosts }
+      } catch (error) {
+        console.log(error)
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "ユーザー投稿詳細の取得に失敗しました",
+        })
+      }
+    }),
 })
