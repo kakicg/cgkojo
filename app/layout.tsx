@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import GoogleAnalytics from '@/components/settings/GoogleAnalytics'
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { getAuthSession } from "@/lib/nextauth"
@@ -11,8 +10,8 @@ import Navigation from "@/components/auth/Navigation"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "クラシックギターと日々雑感",
-  description: "kakicgのブログ",
+  title: "T3Stack入門",
+  description: "T3Stack入門",
 }
 
 interface RootLayoutProps {
@@ -25,11 +24,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
 
   return (
     <html lang="ja">
-      <head>
-        <GoogleAnalytics />
-      </head>
       <body className={inter.className}>
-       
         <div className="flex min-h-screen flex-col">
           <AuthProvider>
             <TrpcProvider>
@@ -45,12 +40,12 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
                 <div className="text-center text-sm">
                   Copyright © All rights reserved |{" "}
                   <a
-                    href="https://www.kakicg.site/"
+                    href="https://www.youtube.com/@fullstackchannel"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline"
                   >
-                    CG工場
+                    FullStackChannel
                   </a>
                 </div>
               </footer>

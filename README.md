@@ -1,11 +1,5 @@
-## Google Analytics
-https://zenn.dev/kazuki23/articles/4cc0cf35a20ac0
+# T3 Stack入門！認証システムを構築しよう！
 
+https://zenn.dev/hathle/books/t3-stack-auth-book
 
-
-
-## T3 Stack 認証、ブログシステム
-
-https://zenn.dev/hathle/books/t3-stack-blog-book
-
-![](https://res.cloudinary.com/dhaciqd0v/image/upload/v1698567203/LINE/youtube_tz7vvl.png)
+![](https://res.cloudinary.com/dhaciqd0v/image/upload/v1698386860/LINE/youtube_luy3uk.png)
