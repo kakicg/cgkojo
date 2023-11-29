@@ -10,8 +10,8 @@ import Navigation from "@/components/auth/Navigation"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "T3Stack入門",
-  description: "T3Stack入門",
+  title: "クラシックギターと日々雑感",
+  description: "クラシックギターと日々雑感",
 }
 
 interface RootLayoutProps {
@@ -38,7 +38,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
               {/* フッター */}
               <footer className="py-5">
                 <div className="text-center text-sm">
-                  Copyright © All rights reserved |{" "}
+                  Copyright © All rights reserved |{"CG工場"}
                   <a
                     href="https://www.youtube.com/@fullstackchannel"
                     target="_blank"
